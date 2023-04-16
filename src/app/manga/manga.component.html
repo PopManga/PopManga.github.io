@@ -1,0 +1,32 @@
+<div class="card w-100 h-100">
+  <div *ngIf="!!manga; then mangaPresent; else mangaAbsent"></div>
+  <ng-template #mangaPresent>
+    <div class="card-img-top d-flex justify-content-center align-items-center">
+      <div *ngIf="!!manga?.imageUrl; then imagePresent; else imageAbsent"></div>
+      <ng-template #imagePresent>
+        <img
+          *ngIf="!!manga?.imageUrl"
+          [src]="'assets/manga-covers/' + manga?.imageUrl"
+          class="img-fluid"
+          [alt]="manga?.title"
+        />
+      </ng-template>
+      <ng-template #imageAbsent>
+        <div class="d-flex justify-content-center align-items-center">
+          Pas d'image
+        </div>
+      </ng-template>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ manga?.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-secondary text-center">
+        {{ manga?.otherTitle ?? "&nbsp;" }}
+      </h6>
+    </div>
+  </ng-template>
+  <ng-template #mangaAbsent>
+    <div class="card-body">
+      <span class="text-danger">Erreur : manga non renseigné</span>
+    </div>
+  </ng-template>
+</div>

@@ -1,38 +1,13 @@
 <div class="container py-5">
   <h1 class="text-center">PopManga</h1>
-  <div *ngFor="let level of levels" class="mt-5">
-    <h3 class="text-center">Niveau {{ level.level }}</h3>
-    <div class="row g-3">
+  <div *ngFor="let entry of mangasPerLevel.entries()" class="mt-5">
+    <h3 class="text-center">Niveau {{ entry[0] }}</h3>
+    <div class="row g-4">
       <div
         class="col-12 col-md-6 col-lg-4 col-xxl-3"
-        *ngFor="let entry of level.entries"
+        *ngFor="let manga of entry[1]"
       >
-        <div class="card w-100 h-100">
-          <div
-            class="card-img-top d-flex justify-content-center align-items-center"
-          >
-            <div *ngIf="!!entry.imageUrl; then image; else noImage"></div>
-            <ng-template #image>
-              <img
-                *ngIf="!!entry.imageUrl"
-                [src]="'assets/manga-covers/' + entry.imageUrl"
-                class="img-fluid"
-                [alt]="entry.title"
-              />
-            </ng-template>
-            <ng-template #noImage>
-              <div class="d-flex justify-content-center align-items-center">
-                Pas d'image
-              </div>
-            </ng-template>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title text-center">{{ entry.title }}</h5>
-            <h6 class="card-subtitle mb-2 text-secondary text-center">
-              {{ entry.animeTitle ?? "&nbsp;" }}
-            </h6>
-          </div>
-        </div>
+        <manga [manga]="manga" />
       </div>
     </div>
   </div>
