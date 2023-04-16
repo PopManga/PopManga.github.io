@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import { getMangasPerLevel } from "./data";
 import { Screen } from "./screen";
 
 @Component({
@@ -10,7 +9,6 @@ import { Screen } from "./screen";
 export class AppComponent {
   Screen = Screen;
   screen = Screen.Home;
-  mangasPerLevel = getMangasPerLevel();
 
   goToScreen(newScreen: Screen) {
     this.screen = newScreen;
