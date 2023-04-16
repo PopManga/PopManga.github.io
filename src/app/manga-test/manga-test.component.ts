@@ -5,12 +5,17 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { getMangasShuffled } from "../data";
+import { Manga, getMangasShuffled } from "../data";
 import { Screen } from "../screen";
 
-interface KnowledgeLevel {
-  known: number;
-  unknown: number;
+interface MangaWithKnowledge extends Manga {
+  known: boolean;
+}
+
+interface TestResults {
+  obtainedLevel: number;
+  maxLevel: number;
+  levels: { [key: number]: { known: number; total: number } };
 }
 
 @Component({
@@ -23,38 +28,33 @@ export class MangaTestComponent implements OnInit {
 
   @HostListener("document:keydown", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
-    console.log(event.key);
     if (event.key === "ArrowLeft") {
       this.mangaKnown();
     } else if (event.key === "ArrowRight") {
       this.mangaNotKnown();
+    } else if (event.key === "ArrowUp") {
+      this.backOne();
     }
   }
 
   Math = Math;
-  mangasShuffled = getMangasShuffled();
+  mangasShuffled: MangaWithKnowledge[] = [];
   currentMangaIndex = 0;
-  knowledgeMap: { [key: number]: KnowledgeLevel } = {};
   testOver = false;
-  results = { obtainedLevel: -1, maxLevel: -1 };
+  results: TestResults = { obtainedLevel: -1, maxLevel: -1, levels: {} };
 
   ngOnInit(): void {
     this.resetTest();
   }
 
   resetTest() {
-    this.mangasShuffled = getMangasShuffled();
+    this.mangasShuffled = getMangasShuffled() as MangaWithKnowledge[];
     this.currentMangaIndex = 0;
-    this.knowledgeMap = {};
     this.testOver = false;
-    this.results = { obtainedLevel: -1, maxLevel: -1 };
-    this.mangasShuffled
-      .map((manga) => manga.level)
-      .forEach((level) => {
-        if (this.knowledgeMap[level] == null) {
-          this.knowledgeMap[level] = { known: 0, unknown: 0 };
-        }
-      });
+    this.results = { obtainedLevel: -1, maxLevel: -1, levels: {} };
+    for (let manga of this.mangasShuffled) {
+      manga.known = false;
+    }
   }
 
   gotToHomeScreen() {
@@ -73,12 +73,6 @@ export class MangaTestComponent implements OnInit {
     return this.currentManga().id === mangaId;
   }
 
-  backOne() {
-    if (this.currentMangaIndex > 0) {
-      this.currentMangaIndex--;
-    }
-  }
-
   nextOne() {
     if (this.currentMangaIndex < this.mangasShuffled.length - 1) {
       this.currentMangaIndex++;
@@ -88,35 +82,54 @@ export class MangaTestComponent implements OnInit {
     }
   }
 
+  backOne() {
+    if (this.currentMangaIndex > 0) {
+      this.currentMangaIndex--;
+      this.currentManga().known = false;
+    }
+  }
+
   mangaKnown() {
-    this.knowledgeMap[this.currentManga().level].known++;
+    this.currentManga().known = true;
     this.nextOne();
   }
 
   mangaNotKnown() {
-    this.knowledgeMap[this.currentManga().level]!.unknown++;
+    this.currentManga().known = false;
     this.nextOne();
   }
 
   listOfLevels() {
-    return Object.keys(this.knowledgeMap)
-      .map((level) => parseInt(level))
-      .sort((a, b) => a - b);
+    return [...new Set(this.mangasShuffled.map((manga) => manga.level))].sort(
+      (a, b) => a - b
+    );
   }
 
   computeResults() {
-    const maxLevel = this.listOfLevels().pop()!;
-    let obtainedLevel = 0;
-    for (let checkLevel = 1; checkLevel <= maxLevel; checkLevel++) {
-      const checkLevelData = this.knowledgeMap[checkLevel];
+    const newResults: TestResults = {
+      obtainedLevel: 0,
+      maxLevel: this.listOfLevels().pop()!,
+      levels: {},
+    };
+    for (let manga of this.mangasShuffled) {
+      if (newResults.levels[manga.level] == null) {
+        newResults.levels[manga.level] = { known: 0, total: 0 };
+      }
+      newResults.levels[manga.level].total++;
+      if (manga.known) {
+        newResults.levels[manga.level].known++;
+      }
+    }
+    for (let checkLevel = 1; checkLevel <= newResults.maxLevel; checkLevel++) {
+      const checkLevelData = newResults.levels[checkLevel];
       if (checkLevelData != null) {
-        if (checkLevelData.known >= checkLevelData.unknown) {
-          obtainedLevel = checkLevel;
+        if (checkLevelData.known >= checkLevelData.total / 2) {
+          newResults.obtainedLevel = checkLevel;
         } else {
           break;
         }
       }
     }
-    return { obtainedLevel, maxLevel };
+    return newResults;
   }
 }

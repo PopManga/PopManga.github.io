@@ -44,11 +44,11 @@
       <div class="d-flex justify-content-center align-items-center mt-3">
         <button
           type="button"
-          class="btn btn-sm btn-secondary"
           [disabled]="currentMangaIndex === 0"
           (click)="backOne()"
+          class="btn btn-secondary"
         >
-          Précédent
+          Précédent<span style="font-size: 75%"><br />(flèche haute)</span>
         </button>
       </div>
     </div>
@@ -109,9 +109,7 @@
         <p class="mb-1">
           Niveau {{ level }} :
           <b>{{
-            knowledgeMap[level].known +
-              " / " +
-              (knowledgeMap[level].known + knowledgeMap[level].unknown)
+            results.levels[level].known + " / " + results.levels[level].total
           }}</b>
           <span
             *ngIf="level <= results.obtainedLevel"
@@ -142,8 +140,7 @@
               : 'secondary'
           "
           [value]="
-            (100 * knowledgeMap[level].known) /
-            (knowledgeMap[level].known + knowledgeMap[level].unknown)
+            (100 * results.levels[level].known) / results.levels[level].total
           "
         ></ngb-progressbar>
       </div>
