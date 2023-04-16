@@ -1,8 +1,8 @@
 <div class="container py-5">
   <h1 class="text-center">PopManga</h1>
   <div *ngFor="let entry of mangasPerLevel.entries()" class="mt-5">
-    <h3 class="text-center">Niveau {{ entry[0] }}</h3>
-    <div class="row g-4">
+    <h3 class="text-center mb-5">Niveau {{ entry[0] }}</h3>
+    <div class="row g-5">
       <div
         class="col-12 col-md-6 col-lg-4 col-xxl-3"
         *ngFor="let manga of entry[1]"

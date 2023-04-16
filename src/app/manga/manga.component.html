@@ -1,7 +1,20 @@
 <div class="card w-100 h-100">
   <div *ngIf="!!manga; then mangaPresent; else mangaAbsent"></div>
   <ng-template #mangaPresent>
-    <div class="card-img-top d-flex justify-content-center align-items-center">
+    <div
+      class="card-body d-flex flex-column justify-content-center align-items-center"
+    >
+      <h4 class="card-title text-center">{{ manga?.title }}</h4>
+      <h5
+        *ngIf="!!manga?.otherTitle"
+        class="card-subtitle mb-2 text-secondary text-center"
+      >
+        {{ manga?.otherTitle }}
+      </h5>
+    </div>
+    <div
+      class="card-img-bottom d-flex justify-content-center align-items-center"
+    >
       <div *ngIf="!!manga?.imageUrl; then imagePresent; else imageAbsent"></div>
       <ng-template #imagePresent>
         <img
@@ -16,12 +29,6 @@
           Pas d'image
         </div>
       </ng-template>
-    </div>
-    <div class="card-body">
-      <h5 class="card-title text-center">{{ manga?.title }}</h5>
-      <h6 class="card-subtitle mb-2 text-secondary text-center">
-        {{ manga?.otherTitle ?? "&nbsp;" }}
-      </h6>
     </div>
   </ng-template>
   <ng-template #mangaAbsent>
