@@ -6,25 +6,47 @@
   </div>
   <div class="row">
     <div class="col">
-      <div
+      <ng-container
         *ngIf="screen === Screen.Home"
         class="d-flex justify-content-center align-items-center"
       >
-        <button
-          type="button"
-          class="btn btn-primary mx-3"
-          (click)="screen = Screen.Test"
-        >
-          Faire le test
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary mx-3"
-          (click)="screen = Screen.CardList"
-        >
-          Liste des mangas par niveau
-        </button>
-      </div>
+        <div class="row">
+          <div class="col-12 col-md-6 mx-auto mb-5">
+            <p class="text-center">
+              Ce site classe des mangas par niveau de popularité en France de la
+              licence liée.
+            </p>
+            <p class="text-center">
+              Les critères suivants sont requis pour qu'un manga figure dans la
+              liste : le manga est d’origine japonaise, le manga a été publié en
+              version papier en France et en français, le manga n'est pas adapté
+              d’une œuvre écrite préexistante, le manga n'est pas un one-shot,
+              le manga a été publié en France il y a plus de 5 ans.
+            </p>
+            <p class="text-center">
+              À partir du classement des mangas par niveau de popularité, un
+              test est proposé pour vous évaluer sur votre connaissance des
+              mangas.
+            </p>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+          <button
+            type="button"
+            class="btn btn-primary mx-3"
+            (click)="screen = Screen.Test"
+          >
+            Faire le test
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary mx-3"
+            (click)="screen = Screen.CardList"
+          >
+            Liste des mangas par niveau
+          </button>
+        </div>
+      </ng-container>
     </div>
   </div>
   <div class="row">
