@@ -228,11 +228,6 @@ const data: Omit<Manga, "id">[] = [
   },
   {
     level: 3,
-    title: "Hamtaro",
-    imageUrl: "",
-  },
-  {
-    level: 3,
     title: "La Rose de Versailles",
     otherTitle: "Lady Oscar",
     imageUrl: "la-rose-de-versailles.jpg",
@@ -686,4 +681,21 @@ export function getMangasPerLevel(): Map<number, Manga[]> {
     agg.get(e.level)?.push(e);
     return agg;
   }, new Map<number, Manga[]>());
+}
+
+export function getMangasShuffled(): Manga[] {
+  // Fisher-Yates (aka Knuth) Shuffle
+  const mangasArray = getMangas();
+  let currentIndex = mangasArray.length,
+    randomIndex;
+  while (currentIndex != 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [mangasArray[currentIndex], mangasArray[randomIndex]] = [
+      mangasArray[randomIndex],
+      mangasArray[currentIndex],
+    ];
+  }
+
+  return mangasArray;
 }
