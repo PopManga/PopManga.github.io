@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { Manga } from "../data";
-import { Screen } from "../screen";
 
 @Component({
   selector: "manga-card[manga]",
@@ -9,9 +8,4 @@ import { Screen } from "../screen";
 })
 export class MangaCardComponent {
   @Input() manga?: Manga;
-  @Output() screenChange = new EventEmitter<Screen>();
-
-  gotToHomeScreen() {
-    this.screenChange.emit(Screen.Home);
-  }
 }

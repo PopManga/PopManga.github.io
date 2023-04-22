@@ -6,7 +6,6 @@ import {
   Output,
 } from "@angular/core";
 import { Manga, getMangasShuffled } from "../data";
-import { Screen } from "../screen";
 
 interface MangaWithKnowledge extends Manga {
   known: boolean;
@@ -24,8 +23,6 @@ interface TestResults {
   styleUrls: ["./manga-test.component.scss"],
 })
 export class MangaTestComponent implements OnInit {
-  @Output() screenChange = new EventEmitter<Screen>();
-
   @HostListener("document:keydown", ["$event"])
   handleKeyboardEvent(event: KeyboardEvent) {
     if (event.key === "ArrowLeft") {
@@ -55,14 +52,6 @@ export class MangaTestComponent implements OnInit {
     for (let manga of this.mangasShuffled) {
       manga.known = false;
     }
-  }
-
-  gotToHomeScreen() {
-    this.screenChange.emit(Screen.Home);
-  }
-
-  gotToMangaList() {
-    this.screenChange.emit(Screen.CardList);
   }
 
   currentManga() {

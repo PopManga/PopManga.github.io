@@ -1,7 +1,7 @@
 <div class="row mb-5">
   <div class="col">
     <div class="d-flex justify-content-center align-items-center">
-      <button type="button" class="btn btn-primary" (click)="gotToHomeScreen()">
+      <button type="button" class="btn btn-primary" [routerLink]="'/'">
         Retour à l'accueil
       </button>
     </div>
@@ -159,7 +159,7 @@
         <button
           type="button"
           class="btn btn-primary mx-3"
-          (click)="gotToMangaList()"
+          [routerLink]="'/liste'"
         >
           Voir la liste des mangas par niveau
         </button>
