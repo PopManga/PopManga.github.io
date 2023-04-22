@@ -1,8 +1,11 @@
 import { Component, HostListener, OnInit } from "@angular/core";
 import { getMangasShuffled } from "../data";
-import { MangaWithKnowledge, computeTestResults } from "../test";
+import {
+  MangaWithKnowledge,
+  computeTestResults,
+  stringifyTestResultsForUrl,
+} from "../test";
 import { Router } from "@angular/router";
-import JsonURL from "@jsonurl/jsonurl";
 
 @Component({
   selector: "manga-test",
@@ -49,7 +52,7 @@ export class MangaTestComponent implements OnInit {
     } else {
       const results = computeTestResults(this.mangasShuffled);
       this.router.navigate(["/test/resultats"], {
-        queryParams: { donnees: JsonURL.stringify(results, { AQF: true }) },
+        queryParams: { donnees: stringifyTestResultsForUrl(results) },
       });
     }
   }

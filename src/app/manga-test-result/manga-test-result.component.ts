@@ -1,8 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { getMangas } from "../data";
-import { TestResults, getListOfLevels } from "../test";
+import { TestResults, getListOfLevels, parseTestResultsFromUrl } from "../test";
 import { ActivatedRoute } from "@angular/router";
-import JsonURL from "@jsonurl/jsonurl";
 
 @Component({
   selector: "manga-test-result",
@@ -18,7 +17,7 @@ export class MangaTestResultComponent implements OnInit {
   ngOnInit(): void {
     this.listOfLevels = getListOfLevels(getMangas());
     this.route.queryParams.subscribe((params) => {
-      this.results = JsonURL.parse(params["donnees"], { AQF: true });
+      this.results = parseTestResultsFromUrl(params["donnees"]);
     });
   }
 }
