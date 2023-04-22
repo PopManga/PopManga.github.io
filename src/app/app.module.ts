@@ -8,6 +8,7 @@ import { MangaCardComponent } from "./manga-card/manga-card.component";
 import { MangaCardListComponent } from "./manga-card-list/manga-card-list.component";
 import { MangaTestComponent } from "./manga-test/manga-test.component";
 import { AppRoutingModule } from "./app-routing.module";
+import { MangaTestResultComponent } from "./manga-test-result/manga-test-result.component";
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AppRoutingModule } from "./app-routing.module";
     MangaCardComponent,
     MangaCardListComponent,
     MangaTestComponent,
+    MangaTestResultComponent,
   ],
   imports: [BrowserModule, NgbModule, AppRoutingModule],
   providers: [],
