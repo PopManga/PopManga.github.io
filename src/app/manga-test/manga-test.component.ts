@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-} from "@angular/core";
+import { Component, HostListener, OnInit } from "@angular/core";
 import { Manga, getMangasShuffled } from "../data";
 
 interface MangaWithKnowledge extends Manga {

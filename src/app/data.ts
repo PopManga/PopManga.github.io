@@ -6,6 +6,11 @@ export interface Manga {
   imageUrl: string;
 }
 
+export interface MangaLevel {
+  level: number;
+  mangas: Manga[];
+}
+
 const data: Omit<Manga, "id">[] = [
   {
     level: 1,
@@ -670,17 +675,21 @@ for (let i = 0; i < data.length; i++) {
 }
 
 export function getMangas(): Manga[] {
-  return JSON.parse(JSON.stringify(mangas));
+  return JSON.parse(JSON.stringify(mangas)); // cloning initial list
 }
 
-export function getMangasPerLevel(): Map<number, Manga[]> {
-  return getMangas().reduce((agg, e) => {
-    if (!agg.has(e.level)) {
-      agg.set(e.level, []);
-    }
-    agg.get(e.level)?.push(e);
-    return agg;
-  }, new Map<number, Manga[]>());
+export function getMangasPerLevel(): MangaLevel[] {
+  const mangasPerLevel: MangaLevel[] = [];
+  getMangas()
+    .reduce((agg, e) => {
+      if (!agg.has(e.level)) {
+        agg.set(e.level, []);
+      }
+      agg.get(e.level)?.push(e);
+      return agg;
+    }, new Map<number, Manga[]>())
+    .forEach((mangas, level) => mangasPerLevel.push({ level, mangas }));
+  return mangasPerLevel;
 }
 
 export function getMangasShuffled(): Manga[] {
