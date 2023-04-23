@@ -1,0 +1,13 @@
+
+// Inspired from https://getbootstrap.com/docs/5.2/migration/#new-_mapsscss
+@import "bootstrap/scss/functions";
+
+$popmanga-gray: #dddddd;
+
+$custom-popmanga-colors: (
+  "popmanga-gray": $popmanga-gray
+);
+
+@import "bootstrap/scss/variables";
+
+$theme-colors: map-merge($theme-colors, $custom-popmanga-colors);

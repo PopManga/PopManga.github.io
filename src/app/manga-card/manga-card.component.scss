@@ -1,8 +1,7 @@
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
+@import "../../styles/colors";
 
 .card-img-bottom {
-  background-color: $gray-300;
+  background-color: $popmanga-gray;
   height: 20rem;
 
   & > * {

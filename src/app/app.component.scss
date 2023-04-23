@@ -1,0 +1,37 @@
+@import "../styles/colors";
+
+.btn-popmanga-title {
+  // Font
+  --bs-btn-color: var(--bs-black);
+  --bs-btn-font-family: Langar;
+  --bs-btn-font-size: 2.5rem;
+
+  // Background
+  --bs-btn-bg: var(--bs-white);
+
+  // Padding
+  --bs-btn-padding-y: 0.75rem;
+  --bs-btn-padding-x: 2.5rem;
+
+  // Border
+  --bs-btn-border-color: var(--bs-btn-bg);
+  --bs-btn-border-radius: 0.5rem;
+
+  // Hover font
+  --bs-btn-hover-color: var(--bs-btn-color);
+
+  // Hover background
+  --bs-btn-hover-bg: var(--bs-popmanga-gray);
+
+  // Hover border
+  --bs-btn-hover-border-color: var(--bs-btn-hover-bg);
+
+  // Active font
+  --bs-btn-active-color: var(--bs-btn-hover-color);
+
+  // Active background
+  --bs-btn-active-bg: #{shade-color($popmanga-gray, 20%)};
+
+  // Active border
+  --bs-btn-active-border-color: var(--bs-btn-active-bg);
+}
