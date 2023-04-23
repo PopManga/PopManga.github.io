@@ -18,17 +18,15 @@ interface TestResultsForUrl {
 }
 
 export function stringifyTestResultsForUrl(testResults: TestResults) {
-  const levels = {} as TestResultsForUrl["l"];
-  for (let level in testResults.levels) {
-    levels[parseInt(level)] = {
-      k: testResults.levels[parseInt(level)].known,
-      t: testResults.levels[parseInt(level)].total,
-    };
-  }
   const testResultsForUrl: TestResultsForUrl = {
     o: testResults.obtainedLevel,
     m: testResults.maxLevel,
-    l: levels,
+    l: Object.fromEntries(
+      Object.entries(testResults.levels).map(([level, levelData]) => [
+        parseInt(level),
+        { k: levelData.known, t: levelData.total },
+      ])
+    ),
   };
   return JsonURL.stringify(testResultsForUrl, { AQF: true });
 }
@@ -37,17 +35,15 @@ export function parseTestResultsFromUrl(testResultsFromUrl: string) {
   const testResultsForUrl = JsonURL.parse(testResultsFromUrl, {
     AQF: true,
   }) as TestResultsForUrl;
-  const levels = {} as TestResults["levels"];
-  for (let level in testResultsForUrl.l) {
-    levels[parseInt(level)] = {
-      known: testResultsForUrl.l[parseInt(level)].k,
-      total: testResultsForUrl.l[parseInt(level)].t,
-    };
-  }
   const testResults: TestResults = {
     obtainedLevel: testResultsForUrl.o,
     maxLevel: testResultsForUrl.m,
-    levels: levels,
+    levels: Object.fromEntries(
+      Object.entries(testResultsForUrl.l).map(([level, levelData]) => [
+        parseInt(level),
+        { known: levelData.k, total: levelData.t },
+      ])
+    ),
   };
   return testResults;
 }
