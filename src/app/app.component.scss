@@ -7,7 +7,7 @@
   --bs-btn-font-size: 2.5rem;
 
   // Background
-  --bs-btn-bg: var(--bs-white);
+  --bs-btn-bg: var(--bs-popmanga-gray);
 
   // Padding
   --bs-btn-padding-y: 0.75rem;
@@ -15,13 +15,13 @@
 
   // Border
   --bs-btn-border-color: var(--bs-btn-bg);
-  --bs-btn-border-radius: 0.5rem;
+  --bs-btn-border-radius: 0rem;
 
   // Hover font
   --bs-btn-hover-color: var(--bs-btn-color);
 
   // Hover background
-  --bs-btn-hover-bg: var(--bs-popmanga-gray);
+  --bs-btn-hover-bg: #{shade-color($popmanga-gray, 5%)};
 
   // Hover border
   --bs-btn-hover-border-color: var(--bs-btn-hover-bg);
@@ -30,7 +30,7 @@
   --bs-btn-active-color: var(--bs-btn-hover-color);
 
   // Active background
-  --bs-btn-active-bg: #{shade-color($popmanga-gray, 20%)};
+  --bs-btn-active-bg: #{shade-color($popmanga-gray, 10%)};
 
   // Active border
   --bs-btn-active-border-color: var(--bs-btn-active-bg);
